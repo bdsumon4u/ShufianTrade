@@ -11,7 +11,7 @@ if (! function_exists('pageRoutes')) {
         try {
             Schema::hasTable((new Page)->getTable())
                 && Route::get('{page:slug}', 'PageController')
-                    ->where('page', implode(
+                    ->where('page', 'test-page|'.implode(
                         '|', Page::get('slug')
                             ->map->slug
                             ->toArray()
