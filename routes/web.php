@@ -13,7 +13,9 @@ Route::get('lang/{locale}', function ($locale) {
     return redirect()->back();
 })->name('lang');
 
-Route::view('auth', 'auth')->middleware('guest:user')->name('auth');
+Route::get('auth', function () {
+    return view('auth');
+})->middleware('guest:user')->name('auth');
 
 Route::get('/', 'HomeController')->name('/');
 Route::get('/sections/{section}/products', 'HomeSectionProductController')->name('home-sections.products');
