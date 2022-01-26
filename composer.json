@@ -8,6 +8,7 @@
     ],
     "license": "MIT",
     "require": {
+        "ext-json": "*",
         "php": "^7.2.5",
         "algolia/algoliasearch-client-php": "^2.7",
         "barryvdh/laravel-debugbar": "^3.5",
