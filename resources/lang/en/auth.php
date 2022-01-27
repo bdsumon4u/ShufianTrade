@@ -13,7 +13,8 @@ return [
     |
     */
 
-    'failed' => 'These credentials do not match our records.',
+    'failed' => 'No account found with this phone number.',
+    'incorrect' => 'OTP may not be correct.',
     'throttle' => 'Too many login attempts. Please try again in :seconds seconds.',
 
 ];

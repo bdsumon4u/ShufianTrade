@@ -13,9 +13,7 @@ Route::get('lang/{locale}', function ($locale) {
     return redirect()->back();
 })->name('lang');
 
-Route::get('auth', function () {
-    return view('auth');
-})->middleware('guest:user')->name('auth');
+Route::get('auth', 'User\\Auth\\LoginController@showLoginForm')->middleware('guest:user')->name('auth');
 
 Route::get('/', 'HomeController')->name('/');
 Route::get('/sections/{section}/products', 'HomeSectionProductController')->name('home-sections.products');
@@ -26,7 +24,7 @@ Route::get('/brands/{brand:slug}/products', 'BrandProductController')->name('bra
 
 Route::view('/cart', 'cart')->name('cart');
 Route::match(['get', 'post'], '/checkout', 'CheckoutController')->name('checkout');
-Route::get('track-order', 'OrderTrackController')->name('track-order');
+Route::match(['get', 'post'], 'track-order', 'OrderTrackController')->name('track-order');
 
 pageRoutes();
 

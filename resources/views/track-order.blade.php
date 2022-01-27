@@ -23,10 +23,6 @@
                         <p class="mb-4 pt-2">Phone number should be the same as in the order.</p>
                         <form action="{{ route('track-order') }}">
                             <div class="form-group">
-                                <label for="phone">Phone Number</label>
-                                <x-input name="phone" :value="'+880'" placeholder="Phone Number" />
-                            </div>
-                            <div class="form-group">
                                 <label for="order">Order ID</label>
                                 <x-input id="order" name="order" placeholder="Order ID" />
                             </div>

@@ -66,4 +66,9 @@ return [
         'desktop' => [840, 395],
     ],
 
+    'bdwebs' => [
+        'api_key' => env('BDWEBS_API_KEY'),
+        'senderid' => env('BDWEBS_SENDERID'),
+    ]
+
 ];

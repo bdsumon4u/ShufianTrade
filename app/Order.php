@@ -19,4 +19,8 @@ class Order extends Model
     {
         return json_decode($data);
     }
+
+    public function user() {
+        return $this->belongsTo(User::class);
+    }
 }

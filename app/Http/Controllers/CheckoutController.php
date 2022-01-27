@@ -2,13 +2,15 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\CheckoutRequest;
+use App\Notifications\User\AccountCreated;
+use App\Notifications\User\OrderPlaced;
 use App\Order;
 use App\Product;
-use App\Mail\OrderPlaced;
-use Illuminate\Http\Request;
+use App\User;
+use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Mail;
-use App\Http\Requests\CheckoutRequest;
+use Illuminate\Support\Str;
 
 class CheckoutController extends Controller
 {
@@ -27,8 +29,7 @@ class CheckoutController extends Controller
 
         $data = $request->validated();
 
-        $order = null;
-        DB::transaction(function () use ($data, &$order) {
+        $order = DB::transaction(function () use ($data, &$order) {
             $products = Product::find(array_keys($data['products']))
                 ->map(function (Product $product) use ($data) {
                     $id = $product->id;
@@ -61,9 +62,12 @@ class CheckoutController extends Controller
                 })->toArray();
 
             $data['products'] = json_encode($products);
+            $user = $this->getUser($data);
+            $status = !auth('user')->user() ? 'PENDING'
+                : data_get(config('app.orders', []), 0, 'PROCESSING'); // Default Status
             $data += [
-                'user_id' => optional(auth('user')->user())->id, // If User Logged In
-                'status' => data_get(config('app.orders', []), 0, 'PENDING'), // Default Status
+                'user_id' => $user->id, // If User Logged In
+                'status' => $status,
                 // Additional Data
                 'data' => json_encode([
                     'shipping_area' => $data['shipping'],
@@ -77,16 +81,38 @@ class CheckoutController extends Controller
             \LaravelFacebookPixel::createEvent('Purchase', ['currency' => 'USD', 'value' => data_get(json_decode($data['data'], true), 'subtotal')]);
 
             $order = Order::create($data);
+            $user->notify(new OrderPlaced($order));
+            return $order;
         });
 
         // Undefined index email.
         // $data['email'] && Mail::to($data['email'])->queue(new OrderPlaced($order));
-        
+
         session()->flash('success', 'Dear ' . $data['name'] . ', Your Order is Successfully Recieved. Thanks For Your Order.');
 
         return redirect()->route('track-order', [
             'phone' => $data['phone'],
             'order' => optional($order)->getKey(),
         ] + ($request->isMethod('GET') ? [] : ['clear' => 'all']));
+    }
+
+    private function getUser($data)
+    {
+        if ($user = auth('user')->user()) {
+            return $user;
+        }
+
+        $user = User::query()->firstOrCreate(
+            ['phone_number' => $data['phone']],
+            array_merge(Arr::except($data, 'phone'), [
+                'email_verified_at' => now(),
+                'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', // password
+                'remember_token' => Str::random(10),
+            ])
+        );
+
+        $user->notify(new AccountCreated());
+
+        return $user;
     }
 }

@@ -12,6 +12,27 @@
             <h5 class="order-header__title">Order #{{ $order->id }}</h5>
             <div class="order-header__actions"><a href="{{ route('track-order') }}" class="btn btn-xs btn-secondary">Back to Form</a></div>
             <div class="order-header__subtitle">Was placed on <mark class="order-header__date">{{ $order->created_at->format('d-m-Y') }}</mark> and currently status is <mark class="order-header__status">{{ $order->status }}</mark>.</div>
+              @if($order->status == 'PENDING')
+            <div class="order-header__subtitle">
+                <form action="{{ route('track-order') }}" method="post">
+                    @csrf
+                    <input type="hidden" name="order" value="{{ old('order', $order->id) }}">
+                    <div class="form-group">
+                        <label for="">Please check your sms for the code.</label>
+                        <div class="row">
+                            <div class="col-md-7 my-1">
+                                <input type="text" name="code" value="{{ old('code') }}" class="form-control" placeholder="Confirmation Code">
+                            </div>
+                            <div class="col px-0 my-1 d-flex align-items-center justify-content-around">
+                                <button name="action" value="resend" class="btn btn-sm btn-secondary">Resend Code</button>
+                                <div class="mx-1"></div>
+                                <button name="action" value="confirm" class="btn btn-sm btn-primary">Confirm Order</button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+              @endif
           </div>
           <div class="card-divider"></div>
           <div class="card-table">
