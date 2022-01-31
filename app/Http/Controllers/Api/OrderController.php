@@ -19,9 +19,13 @@ class OrderController extends Controller
     public function __invoke(Request $request)
     {
 //        dd(Order::query()->first());
-        $orders = Order::when($request->has('status'), function ($query) {
+        $query = Order::query();
+        if ($request->get('status')) {
             $query->where('status', 'like', \request('status'));
-        })->when(!$request->has('order'), function ($query) {
+        } else {
+            $query->where('status', '!=', 'PENDING');
+        }
+        $orders = $query->when(!$request->has('order'), function ($query) {
             $query->latest('id');
         });
 
