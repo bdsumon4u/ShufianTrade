@@ -24,9 +24,12 @@
                                 <x-input type="text" name="password" placeholder="OTP" />
                                 <x-error field="password" />
                             </div>
-                            <input type="hidden" id="remember" name="remember" value="true">
+                            <input type="hidden" id="remember" name="remember" value="true" />
                             @endif
-                            <button type="submit" class="btn btn-primary mt-2">{{ $login ? 'Login' : 'Send OTP' }}</button>
+                            <button type="submit" class="btn btn-primary mt-2 mr-1">Login</button>
+                            @if($login)
+                                <button name="action" value="resend" type="submit" class="btn btn-primary mt-2 ml-1">Resend OTP</button>
+                            @endif
                         </x-form>
                     </div>
                 </div>

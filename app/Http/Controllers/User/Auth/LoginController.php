@@ -93,6 +93,27 @@ class LoginController extends Controller
         return view('auth');
     }
 
+    /**
+     * Validate the user login request.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return void
+     *
+     * @throws \Illuminate\Validation\ValidationException
+     */
+    protected function validateLogin(Request $request)
+    {
+        if ($request->action == 'resend') {
+            $user = $this->getUser($request->login);
+            $this->sendOTP($user);
+            return;
+        }
+        $request->validate([
+            'login' => 'required|string',
+            'password' => 'required|string',
+        ]);
+    }
+
     private function getUser($phone)
     {
         \request()->merge([

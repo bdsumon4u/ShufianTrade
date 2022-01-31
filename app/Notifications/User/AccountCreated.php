@@ -57,7 +57,7 @@ class AccountCreated extends Notification
      */
     public function toArray($notifiable)
     {
-        $otp = Cache::remember('auth:'.$notifiable->phone_number, 86400, function () {
+        $otp = Cache::remember('auth:'.$notifiable->phone_number, /*86400*/ 2 * 60, function () {
             return mt_rand(1000, 999999);
         });
         return [
