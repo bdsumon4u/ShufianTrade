@@ -59,7 +59,7 @@ class SendOTP extends Notification
     public function toArray($notifiable)
     {
         return [
-            'msg' => 'Your OTP for '.config('app.name'). ' is: ' . $this->otp.'.',
+            'msg' => 'Your access token for '.config('app.name'). ' is: ' . $this->otp.'.',
         ];
     }
 }

@@ -20,15 +20,15 @@
                             </div>
                             @if($login)
                             <div class="form-group">
-                                <label>Enter OTP Code</label> <span class="text-danger">*</span>
-                                <x-input type="text" name="password" placeholder="OTP" />
+                                <label>Enter Access Token</label> <span class="text-danger">*</span>
+                                <x-input type="text" name="password" placeholder="Access Token" />
                                 <x-error field="password" />
                             </div>
                             <input type="hidden" id="remember" name="remember" value="true" />
                             @endif
                             <button type="submit" class="btn btn-primary mt-2 mr-1">Login</button>
                             @if($login)
-                                <button name="action" value="resend" type="submit" class="btn btn-primary mt-2 ml-1">Resend OTP</button>
+                                <button formaction="{{ route('user.resend-otp') }}" class="btn btn-primary mt-2 ml-1">Resend Token</button>
                             @endif
                         </x-form>
                     </div>

@@ -88,30 +88,17 @@ class LoginController extends Controller
 
             $this->sendOTP($user);
             return redirect()->back()->withInput()
-                ->with('success', 'An OTP has been sent to your phone number.');
+                ->with('success', 'A token has been sent to your phone number.');
         }
         return view('auth');
     }
 
-    /**
-     * Validate the user login request.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return void
-     *
-     * @throws \Illuminate\Validation\ValidationException
-     */
-    protected function validateLogin(Request $request)
+    public function resendOTP(Request $request)
     {
-        if ($request->action == 'resend') {
-            $user = $this->getUser($request->login);
-            $this->sendOTP($user);
-            return;
-        }
-        $request->validate([
-            'login' => 'required|string',
-            'password' => 'required|string',
-        ]);
+        $user = $this->getUser($request->login);
+        $this->sendOTP($user);
+        return redirect()->back()->withInput()
+            ->with('success', 'A token has been sent to your phone number.');
     }
 
     private function getUser($phone)
@@ -132,7 +119,7 @@ class LoginController extends Controller
     {
         if (Cache::get($key = 'auth:'.\request()->get('login'))) {
             throw ValidationException::withMessages([
-                'password' => ['Please wait for OTP.'],
+                'password' => ['Please wait for token.'],
             ]);
         }
         $ttl = (property_exists($this, 'decayMinutes') ? $this->decayMinutes : 2) * 60;

@@ -39,6 +39,7 @@ class SMSChannel
 
     private function send_sms($data)
     {
+        Log::info('sending sms:', $data);
         $url = "http://sms.bdwebs.com/smsapi";
         $ch = curl_init();
         curl_setopt($ch, CURLOPT_URL, $url);

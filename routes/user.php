@@ -24,6 +24,7 @@ Route::group(['namespace' => 'User', 'as' => 'user.'], function() {
 
     Route::group(['prefix' => 'user'], function() {
         # User Level Namespace & 'user' Prefix
+        Route::post('resend-otp', 'Auth\LoginController@resendOTP')->name('resend-otp');
         Route::get('/home', 'HomeController@index')->name('home');
         Route::match(['get', 'post'], '/change-password', 'Auth\\ChangePasswordController')
             ->name('password.change');
