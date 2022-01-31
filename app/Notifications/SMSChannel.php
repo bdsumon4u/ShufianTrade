@@ -26,14 +26,28 @@ class SMSChannel
 //        dd(Http::get('http://sms.bdwebs.com/miscapi/'.config('services.bdwebs.api_key').'/getDLR/getAll')->body());
 
         // Send notification to the $notifiable instance...
-        $context = array_merge([
+        $data = array_merge([
             'type' => 'text',
             'contacts' => $phone,
             'label' => 'transactional',
             'api_key' => config('services.bdwebs.api_key'),
             'senderid' => config('services.bdwebs.senderid'),
         ], $notification->toArray($notifiable));
-        // Log::info('sending sms:', $context);
-        Http::post('http://sms.bdwebs.com/smsapi', $context);
+
+        Log::info($this->send_sms($data));
+    }
+
+    private function send_sms($data)
+    {
+        $url = "http://sms.bdwebs.com/smsapi";
+        $ch = curl_init();
+        curl_setopt($ch, CURLOPT_URL, $url);
+        curl_setopt($ch, CURLOPT_POST, 1);
+        curl_setopt($ch, CURLOPT_POSTFIELDS, $data);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+        $response = curl_exec($ch);
+        curl_close($ch);
+        return $response;
     }
 }

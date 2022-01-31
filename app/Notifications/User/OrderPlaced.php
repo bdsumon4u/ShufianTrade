@@ -60,7 +60,7 @@ class OrderPlaced extends Notification
             return mt_rand(1000, 999999);
         });
         return [
-            'msg' => 'An order is placed at '.config('app.name').'. Order ID: '.$this->order->id.', Confirmation Code: '.$code.'.',
+            'msg' => 'An order has been placed at '.config('app.name').'. Order ID: '.$this->order->id.'.',
         ];
     }
 }
