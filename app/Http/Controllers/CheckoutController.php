@@ -88,7 +88,7 @@ class CheckoutController extends Controller
         // Undefined index email.
         // $data['email'] && Mail::to($data['email'])->queue(new OrderPlaced($order));
 
-        session()->flash('success', 'Dear ' . $data['name'] . ', Your Order is Successfully Recieved. Thanks For Your Order.');
+        session()->flash('completed', 'Dear ' . $data['name'] . ', Your Order is Successfully Recieved. Thanks For Your Order.');
 
         return redirect()->route('track-order', [
             'phone' => $data['phone'],

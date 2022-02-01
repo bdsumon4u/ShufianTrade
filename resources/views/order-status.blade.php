@@ -8,6 +8,15 @@
     <div class="row justify-content-center">
       <div class="col-md-8">
         <div class="card">
+            @if(session()->has('completed'))
+                <div class="card-header">
+                    <div class="d-flex justify-content-center">
+                        <img width="100" height="100" src="{{ asset('tik-mark.png') }}" alt="Tick Mark">
+                    </div>
+                    <h4 class="text-center text-success">Your order has been completed!</h4>
+                    <h4 class="text-center text-success">Thank You.</h4>
+                </div>
+            @endif
           <div class="order-header">
             <h5 class="order-header__title">Order #{{ $order->id }}</h5>
             <div class="order-header__actions"><a href="{{ route('track-order') }}" class="btn btn-xs btn-secondary">Back to Form</a></div>

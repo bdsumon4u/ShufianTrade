@@ -60,7 +60,8 @@ class OrderPlaced extends Notification
             return mt_rand(1000, 999999);
         });
         return [
-            'msg' => 'An order has been placed at '.config('app.name').'. Order ID: '.$this->order->id.'. To login your account, click: '.url('auth'),
+            'msg' => 'Thanks for shopping. Your order ID is '.$this->order->id.'. Click here to login: '.url('auth').' HelpLine: 01320585712',
+            //'msg' => 'An order has been placed at '.config('app.name').'. Order ID: '.$this->order->id.'. To login your account, click: '.url('auth'),
         ];
     }
 }
