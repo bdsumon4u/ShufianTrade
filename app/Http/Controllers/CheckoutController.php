@@ -111,7 +111,7 @@ class CheckoutController extends Controller
             ])
         );
 
-        $user->notify(new AccountCreated());
+        // $user->notify(new AccountCreated());
 
         return $user;
     }
