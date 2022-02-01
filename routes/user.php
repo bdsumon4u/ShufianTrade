@@ -34,6 +34,9 @@ Route::group(['namespace' => 'User', 'as' => 'user.'], function() {
             dump('bdsumon4u');
         })->name('example');
         #...
+        Route::middleware('auth:user')->group(function () {
+            Route::get('/orders', 'OrderController')->name('orders');
+        });
         #...
     });
 });

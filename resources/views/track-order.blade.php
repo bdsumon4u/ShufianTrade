@@ -20,11 +20,11 @@
                         <div class="card-title text-center">
                             <h1>Track Order</h1>
                         </div>
-                        <p class="mb-4 pt-2">Phone number should be the same as in the order.</p>
+                        <p class="mb-4 pt-2">You can always track your orders from here.</p>
                         <form action="{{ route('track-order') }}">
                             <div class="form-group">
-                                <label for="order">Order ID</label>
-                                <x-input id="order" name="order" placeholder="Order ID" />
+                                <label for="order">Please enter your order ID</label>
+                                <x-input id="order" name="order" placeholder="Example: 1234" />
                             </div>
                             <div class="pt-3">
                                 <button type="submit" class="btn btn-primary btn-lg btn-block">Track</button>

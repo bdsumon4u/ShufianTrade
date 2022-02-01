@@ -88,7 +88,7 @@ class LoginController extends Controller
 
             $this->sendOTP($user);
             return redirect()->back()->withInput()
-                ->with('success', 'A token has been sent to your phone number.');
+                ->with('token:sent', 'An access token has been sent to your mobile.');
         }
         return view('auth');
     }
@@ -98,7 +98,7 @@ class LoginController extends Controller
         $user = $this->getUser($request->login);
         $this->sendOTP($user);
         return redirect()->back()->withInput()
-            ->with('success', 'A token has been sent to your phone number.');
+            ->with('token:sent', 'An access token has been sent to your mobile.');
     }
 
     private function getUser($phone)

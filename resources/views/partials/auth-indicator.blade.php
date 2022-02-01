@@ -24,18 +24,16 @@
     </a>
     <div class="indicator__dropdown">
         <div class="account-menu">
-            <div class="account-menu__user-info w-100 text-center p-2">
+            <div class="account-menu__user-info w-100 px-3 py-2">
                 <div class="account-menu__user-name">{{ auth('user')->user()->name }}</div>
                 <div class="account-menu__user-email">
-                    {{ auth('user')->user()->email }}
-                    <br>
-                    {{ auth('user')->user()->phone_number }}
+                    Registered number: {{ auth('user')->user()->phone_number }}
                 </div>
             </div>
             <div class="account-menu__divider"></div>
             <ul class="account-menu__links">
                 <li><a href="{{ route('user.profile.edit') }}">Edit Profile</a></li>
-                <li><a href="{{ route('user.password.change') }}">Password</a></li>
+                <li><a href="{{ route('user.orders') }}">Order History</a></li>
             </ul>
             <div class="account-menu__divider"></div>
             <ul class="account-menu__links">

@@ -14,8 +14,12 @@
                         @php($login = old('login') && (cache()->get('auth:'.old('login')) || session()->has('success')))
                         <x-form :action="route('user.login')" :method="$login ? 'post' : 'get'">
                             <div class="form-group">
-                                <label>Phone Number</label> <span class="text-danger">*</span>
-                                <x-input type="text" name="login" placeholder="Phone Number" />
+                                @if(session()->has('token:sent'))
+                                <label class="text-danger">{{ session()->get('token:sent') }}</label> <span class="text-danger">*</span>
+                                @else
+                                <label>Please enter your mobile number.</label> <span class="text-danger">*</span>
+                                @endif
+                                <x-input type="text" name="login" placeholder="Example: 01920134321" />
                                 <x-error field="login" />
                             </div>
                             @if($login)
