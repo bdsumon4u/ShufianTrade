@@ -41,8 +41,7 @@
         </div>
         <div class="col-md-6">
             <div class="text-md-right" id="project">
-                <h6>Note</h6>
-                <p>{{ $order->note ?? 'N/A' }}</p>
+                <img height="80" src="https://barcode.tec-it.com/barcode.ashx?data={{$order->id}}&code=Code128&translate-esc=true" alt="Barcode">
             </div>
         </div>
     </div>
