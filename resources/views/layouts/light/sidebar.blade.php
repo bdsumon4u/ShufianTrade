@@ -142,6 +142,26 @@
               <span>Menus</span>
             </a>
           </li>
+
+          <li class="dropdown">
+            <a class="nav-link menu-title {{request()->is('admin/reports*') ? 'active' : '' }}" href="#">
+              <i data-feather="pie-chart"> </i> </i><span>Reports</span>
+              <div class="according-menu"><i class="fa fa-angle-{{request()->is('admin/reports*') ? 'down' : 'right' }}"></i></div>
+            </a>
+
+            <ul class="nav-submenu menu-content" style="display: {{ request()->is('admin/reports*') ? 'block;' : 'none;' }}">
+              <li>
+                <a class="nav-link menu-title link-nav {{ Route::currentRouteName()=='admin.orders.filter' ? 'active' : '' }}" href="{{route('admin.orders.filter')}}">
+                  <span>Filter</span>
+                </a>
+              </li>
+              <li>
+                <a class="nav-link menu-title link-nav {{ Route::currentRouteName()=='admin.orders.scanning' ? 'active' : '' }}" href="{{route('admin.orders.scanning')}}">
+                  <span>Scanning</span>
+                </a>
+              </li>
+            </ul>
+          </li>
         </ul>
       </div>
       <div class="right-arrow" id="right-arrow"><i data-feather="arrow-right"></i></div>

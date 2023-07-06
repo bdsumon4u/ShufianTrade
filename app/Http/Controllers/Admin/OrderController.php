@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use App\Http\Controllers\Controller;
 use App\Product;
+use Illuminate\Support\Carbon;
 
 class OrderController extends Controller
 {
@@ -65,8 +66,43 @@ class OrderController extends Controller
             'status' => 'required',
         ]);
 
+        if ($request->status != $order->status) {
+            $data['status_at'] = now()->toDateTimeString();
+        }
         $order->update($data);
         return redirect(route('admin.orders.show', $order))->withSuccess('Order Has Been Updated.');
+    }
+
+    public function filter(Request $request)
+    {
+        $orders = Order::select('id', 'products');
+        if ($request->status) {
+            $orders->where('status', $request->status);
+        }
+        if ($request->date) {
+            $orders->whereBetween('status_at', [Carbon::parse($request->date)->startOfDay(), Carbon::parse($request->date)->endOfDay()]);
+        } else {
+            $orders->whereBetween('status_at', [now()->startOfDay(), now()->endOfDay()]);
+        }
+        // if ($request->staff_id) {
+        //     $orders->where('admin_id', $request->staff_id);
+        // }
+
+        return view('admin.orders.filter', [
+            'products' => $orders->get()->pluck('products')->flatten()->groupBy('name')->map->count()->toArray(),
+        ]);
+    }
+
+    public function scanning(Request $request)
+    {
+        if ($request->has('code')) {
+            if ($order = Order::find($request->code)) {
+                return $order;
+            }
+            return null;
+        }
+
+        return view('admin.orders.scanning');
     }
 
     public function invoices(Request $request)
