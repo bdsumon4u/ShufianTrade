@@ -69,6 +69,33 @@ class OrderController extends Controller
         return redirect(route('admin.orders.show', $order))->withSuccess('Order Has Been Updated.');
     }
 
+    public function invoices(Request $request)
+    {
+        $request->validate(['order_id' => 'required']);
+        $order_ids = explode(',', $request->order_id);
+        $order_ids = array_map('trim', $order_ids);
+        $order_ids = array_filter($order_ids);
+
+        $orders = Order::whereIn('id', $order_ids)->get();
+        return view('admin.orders.invoices', compact('orders'));
+    }
+
+    public function status(Request $request)
+    {
+        $request->validate([
+            'status' => 'required',
+            'order_id' => 'required|array',
+        ]);
+
+        $data['status'] = $request->status;
+        if ($request->status == 'Shipping') {
+            $data['shipped_at'] = now()->toDateTimeString();
+        }
+        Order::whereIn('id', $request->order_id)->update($data);
+
+        return redirect()->back()->withSuccess('Order Status Has Been Updated.');
+    }
+
     /**
      * Remove the specified resource from storage.
      *
