@@ -63,6 +63,7 @@ class CheckoutController extends Controller
 
             $data['products'] = json_encode($products);
             $user = $this->getUser($data);
+            $oldOrders = $user->orders()->get();
             $status = !auth('user')->user() ? 'PROCESSING' // PENDING
                 : data_get(config('app.orders', []), 0, 'PROCESSING'); // Default Status
             $data += [
@@ -70,6 +71,8 @@ class CheckoutController extends Controller
                 'status' => $status,
                 // Additional Data
                 'data' => json_encode([
+                    'is_fraud' => $oldOrders->whereIn('status', ['CANCELLED', 'RETURNED'])->count() > 0,
+                    'is_repeat' => $oldOrders->count() > 0,
                     'shipping_area' => $data['shipping'],
                     'shipping_cost' => setting('delivery_charge')->{$data['shipping'] == 'Inside Dhaka' ? 'inside_dhaka' : 'outside_dhaka'} ?? config('services.shipping.'.$data['shipping']),
                     'subtotal'      => is_array($products) ? array_reduce($products, function ($sum, $product) {
