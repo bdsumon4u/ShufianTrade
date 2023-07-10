@@ -32,12 +32,16 @@ class OrderController extends Controller
 
         return DataTables::of($orders)
             ->addIndexColumn()
+            ->setRowAttr([
+                'style' => function ($row) {
+                    if (! ($row->data->is_fraud ?? false) && ($row->data->is_repeat ?? false)) {
+                        return 'background: #98a6ad';
+                    }
+                },
+            ])
             ->setRowClass(function ($row) {
                 if ($row->data->is_fraud ?? false) {
-                    return 'bg-danger';
-                }
-                if ($row->data->is_repeat ?? false) {
-                    return 'bg-warning';
+                    return 'bg-secondary';
                 }
                 return '';
             })
