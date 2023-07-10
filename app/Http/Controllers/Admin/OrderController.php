@@ -66,6 +66,9 @@ class OrderController extends Controller
             'address' => 'required',
             'note' => 'nullable',
             'status' => 'required',
+            'data.discount' => 'required|integer',
+            'data.advanced' => 'required|integer',
+            'data.shipping_cost' => 'required|integer',
         ]);
 
         if ($request->status != $order->status) {
