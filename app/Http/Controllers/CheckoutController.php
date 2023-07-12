@@ -64,8 +64,8 @@ class CheckoutController extends Controller
             $data['products'] = json_encode($products);
             $user = $this->getUser($data);
             $oldOrders = $user->orders()->get();
-            $status = !auth('user')->user() ? 'PROCESSING' // PENDING
-                : data_get(config('app.orders', []), 0, 'PROCESSING'); // Default Status
+            $status = !auth('user')->user() ? 'PENDING' // PENDING
+                : data_get(config('app.orders', []), 0, 'PENDING'); // Default Status
             $data += [
                 'user_id' => $user->id, // If User Logged In
                 'status' => $status,
