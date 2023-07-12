@@ -53,7 +53,27 @@
         <div class="reports-table">
             <div id="section-to-print" class="card rounded-0 shadow-sm">
                 <div class="card-header p-3">
-                    <form id="search-form" action="">
+                    <div class="table-responsive border border-danger" style="display: none;">
+                        <strong class="p-2 text-danger">Duplicate Orders</strong>
+                        <table class="table table-bordered table-striped table-hover datatable" style="width: 100%;">
+                            <thead>
+                                <tr>
+                                    <th style="min-width: 50px;">Order ID</th>
+                                    <th>Customer</th>
+                                    <th>Note</th>
+                                    <th style="min-width: 80px;">Status</th>
+                                    <th style="min-width: 80px;">Subtotal</th>
+                                    <th style="min-width: 80px;">Shipping</th>
+                                    <th style="min-width: 80px;">Total</th>
+                                    <th style="max-width: 225px; text-align: center;">Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                
+                            </tbody>
+                        </table>
+                    </div>
+                    <form id="search-form" action="" class="mt-2">
                         <div class="row">
                             <div class="col">
                                 <input type="text" name="code" id="search" class="form-control form-control">
@@ -121,8 +141,10 @@
             }, 1500);
         }
 
+        var phones = [];
         var products = {};
         var uniqueness = [];
+        var duplicates = [];
         var subtotal = shipping = total = quantity = amount = 0;
         $('#search-form').on('submit', function (ev) {
             ev.preventDefault();
@@ -135,70 +157,121 @@
                     return;
                 }
                 uniqueness.push(order.id);
+                if (phones.includes(order.phone)) {
+                    duplicates.push(order);
 
-                subtotal += parseInt(order.data.subtotal);
-                shipping += parseInt(order.data.shipping_cost);
-                total += parseInt(order.data.subtotal)+parseInt(order.data.shipping_cost);
+                    var tr = `
+                        <tr data-id="${order.id}">
+                            <td><a target="_blank" href="{{route('admin.orders.show', '')}}/${order.id}">${order.id}</a></td>
+                            <td>${order.name}&nbsp;${order.phone}</td>
+                            <td>${order.note ?? 'N/A'}</td>
+                            <td>${order.status}</td>
+                            <td>${order.data.subtotal}</td>
+                            <td>${order.data.shipping_cost}</td>
+                            <td>${parseInt(order.data.subtotal)+parseInt(order.data.shipping_cost)}</td>
+                            <td style="width: 225px;">
+                                <div class="d-flex justify-content-center">
+                                    <button type="button" onclick="keep(${order.id})" class="btn btn-primary btn-sm mr-1">Keep</button>
+                                    <button type="button" onclick="remove(${order.id})" class="d-none btn btn-danger btn-sm ml-1">Remove</button>
+                                </div>
+                            </td>
+                        </tr>
+                    `;
+                    
+                    $('.card-header table tbody').prepend(tr);
+                } else manageOrder(order);
+                phones.push(order.phone);
 
-                var tr = `
-                    <tr data-id="${order.id}">
-                        <td>${1+$('.card-body table tbody tr').length}</td>
-                        <td><a target="_blank" href="{{route('admin.orders.show', '')}}/${order.id}">${order.id}</a></td>
-                        <td>${order.name}&nbsp;${order.phone}</td>
-                        <td>${order.note ?? 'N/A'}</td>
-                        <td>${order.status}</td>
-                        <td>${order.data.subtotal}</td>
-                        <td>${order.data.shipping_cost}</td>
-                        <td>${parseInt(order.data.subtotal)+parseInt(order.data.shipping_cost)}</td>
-                    </tr>
-                `;
-                $('.card-body table tbody').prepend(tr);
-
-                $('.card-body table tbody tr:not(:last-child)').each(function (index, tr) {
-                    $(tr).find('td:first-child').text(index + 1);
-                });
-
-                if (! $('.card-body table tbody tr:last-child').hasClass('summary')) {
-                    $('.card-body table tbody').append('<tr class="summary"><th colspan="5" class="text-right">Total</th><th>'+subtotal+'</th><th>'+shipping+'</th><th>'+total+'</th></tr>');
+                if (duplicates.length) {
+                    $('.card-header .table-responsive').show();
                 } else {
-                    $('.card-body table tbody tr:last-child').find('th:nth-child(2)').text(subtotal);
-                    $('.card-body table tbody tr:last-child').find('th:nth-child(3)').text(shipping);
-                    $('.card-body table tbody tr:last-child').find('th:nth-child(4)').text(total);
-                }
-
-                // ## //
-                if ($('.card-footer table tbody tr:last-child').hasClass('summary')) {
-                    $('.card-footer table tbody tr:last-child').remove();
-                }
-
-                for (var product of order.products) {
-                    var tr = $('.card-footer table tbody tr[data-id="'+product.id+'"]');
-
-                    quantity += parseInt(product.quantity);
-                    amount += parseInt(product.total);
-
-                    if (tr.length) {
-                        tr.find('td:nth-child(2)').text(parseInt(tr.find('td:nth-child(2)').text()) + parseInt(product.quantity));
-                        tr.find('td:nth-child(3)').text(parseInt(tr.find('td:nth-child(3)').text()) + parseInt(product.total));
-                    } else {
-                        var tr = `
-                            <tr data-id="${product.id}">
-                                <td><a target="_blank" href="{{route('products.show', '')}}/${product.slug}">${product.name}</a></td>
-                                <td>${product.quantity}</td>
-                                <td>${product.total}</td>
-                            </tr>
-                        `;
-
-                        $('.card-footer table tbody').append(tr);
-                    }
-                }
-
-                if (! $('.card-footer table tbody tr:last-child').hasClass('summary')) {
-                    $('.card-footer table tbody').append('<tr class="summary"><th class="text-right">Total</th><th>'+quantity+'</th><th>'+amount+'</th></tr>');
+                    $('.card-header .table-responsive').hide();
                 }
             });
 
             return false;
         });
+
+        function keep(id) {
+            var order = duplicates.find(order => order.id == id);
+            remove(id);
+            manageOrder(order);
+        }
+
+        function remove(id) {
+            var order = duplicates.find(order => order.id == id);
+            duplicates.splice(duplicates.indexOf(order), 1);
+            $('.card-header table tbody tr[data-id="'+id+'"]').remove();
+            // uniqueness.splice(uniqueness.indexOf(order.id), 1);
+
+            if (duplicates.length) {
+                $('.card-header .table-responsive').show();
+            } else {
+                $('.card-header .table-responsive').hide();
+            }
+        }
+
+        function manageOrder(order) {
+            subtotal += parseInt(order.data.subtotal);
+            shipping += parseInt(order.data.shipping_cost);
+            total += parseInt(order.data.subtotal)+parseInt(order.data.shipping_cost);
+
+            var tr = `
+                <tr data-id="${order.id}" class="${phones.includes(order.phone) ? 'border border-danger' : ''}">
+                    <td>${1+$('.card-body table tbody tr').length}</td>
+                    <td><a target="_blank" href="{{route('admin.orders.show', '')}}/${order.id}">${order.id}</a></td>
+                    <td>${order.name}&nbsp;${order.phone}</td>
+                    <td>${order.note ?? 'N/A'}</td>
+                    <td>${order.status}</td>
+                    <td>${order.data.subtotal}</td>
+                    <td>${order.data.shipping_cost}</td>
+                    <td>${parseInt(order.data.subtotal)+parseInt(order.data.shipping_cost)}</td>
+                </tr>
+            `;
+            $('.card-body table tbody').prepend(tr);
+
+            $('.card-body table tbody tr:not(:last-child)').each(function (index, tr) {
+                $(tr).find('td:first-child').text(index + 1);
+            });
+
+            if (! $('.card-body table tbody tr:last-child').hasClass('summary')) {
+                $('.card-body table tbody').append('<tr class="summary"><th colspan="5" class="text-right">Total</th><th>'+subtotal+'</th><th>'+shipping+'</th><th>'+total+'</th></tr>');
+            } else {
+                $('.card-body table tbody tr:last-child').find('th:nth-child(2)').text(subtotal);
+                $('.card-body table tbody tr:last-child').find('th:nth-child(3)').text(shipping);
+                $('.card-body table tbody tr:last-child').find('th:nth-child(4)').text(total);
+            }
+
+            // ## //
+            if ($('.card-footer table tbody tr:last-child').hasClass('summary')) {
+                $('.card-footer table tbody tr:last-child').remove();
+            }
+
+            for (var product of order.products) {
+                var tr = $('.card-footer table tbody tr[data-id="'+product.id+'"]');
+
+                quantity += parseInt(product.quantity);
+                amount += parseInt(product.total);
+
+                if (tr.length) {
+                    tr.find('td:nth-child(2)').text(parseInt(tr.find('td:nth-child(2)').text()) + parseInt(product.quantity));
+                    tr.find('td:nth-child(3)').text(parseInt(tr.find('td:nth-child(3)').text()) + parseInt(product.total));
+                } else {
+                    var tr = `
+                        <tr data-id="${product.id}">
+                            <td><a target="_blank" href="{{route('products.show', '')}}/${product.slug}">${product.name}</a></td>
+                            <td>${product.quantity}</td>
+                            <td>${product.total}</td>
+                        </tr>
+                    `;
+
+                    $('.card-footer table tbody').append(tr);
+                }
+            }
+
+            if (! $('.card-footer table tbody tr:last-child').hasClass('summary')) {
+                $('.card-footer table tbody').append('<tr class="summary"><th class="text-right">Total</th><th>'+quantity+'</th><th>'+amount+'</th></tr>');
+            }
+        }
     </script>
 @endpush
