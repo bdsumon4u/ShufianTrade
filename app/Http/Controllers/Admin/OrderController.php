@@ -57,7 +57,7 @@ class OrderController extends Controller
     public function update(Request $request, Order $order)
     {
         $request->merge([
-            'phone' => Str::startsWith($request->phone, '0') ? '+88'.$request->phone : $request->phone,
+            'phone' => Str::startsWith($request->phone, '0') ? '+88' . $request->phone : $request->phone,
         ]);
         $data = $request->validate([
             'name' => 'required',
@@ -145,6 +145,7 @@ class OrderController extends Controller
      */
     public function destroy(Order $order)
     {
+        abort_if(request()->user()->role_id, 403, 'Not Allowed.');
         $products = is_array($order->products) ? $order->products : get_object_vars($order->products);
         array_map(function ($product) {
             if ($product = Product::find($product->id)) {

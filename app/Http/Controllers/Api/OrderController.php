@@ -23,8 +23,11 @@ class OrderController extends Controller
         if ($request->get('status')) {
             $query->where('status', 'like', \request('status'));
         } else {
-            $query->where('status', '!=', 'PENDING');
+            // $query->where('status', '!=', 'PENDING');
         }
+        $query = $query->when($request->role_id == 1, function ($query) {
+            $query->where('admin_id', request('admin_id'));
+        });
         $orders = $query->when(!$request->has('order'), function ($query) {
             $query->latest('id');
         });
@@ -32,19 +35,19 @@ class OrderController extends Controller
 
         return DataTables::of($orders)
             ->addIndexColumn()
-            // ->setRowAttr([
-            //     'style' => function ($row) {
-            //         if (! ($row->data->is_fraud ?? false) && ($row->data->is_repeat ?? false)) {
-            //             return 'background: #98a6ad';
-            //         }
-            //     },
-            // ])
-            // ->setRowClass(function ($row) {
-            //     if ($row->data->is_fraud ?? false) {
-            //         return 'bg-secondary';
-            //     }
-            //     return '';
-            // })
+            ->setRowAttr([
+                'style' => function ($row) {
+                    if (! ($row->data->is_fraud ?? false) && ($row->data->is_repeat ?? false)) {
+                        return 'background: #98a6ad';
+                    }
+                },
+            ])
+            ->setRowClass(function ($row) {
+                if ($row->data->is_fraud ?? false) {
+                    return 'bg-secondary';
+                }
+                return '';
+            })
             ->editColumn('created_at', function ($row) {
                 return "<div class='text-nowrap'>" . $row->created_at->format('d-M-Y') . "<br>" . $row->created_at->format('h:i A') . "</div>";
             })

@@ -35,6 +35,7 @@ Route::group(['namespace' => 'Admin', 'as' => 'admin.'], function() {
         Route::get('/orders/invoices', 'OrderController@invoices')->name('orders.invoices');
         Route::post('/orders/change-status', 'OrderController@status')->name('orders.status');
         Route::resources([
+            'staffs'       => 'StaffController',
             'slides'        => 'SlideController',
             'categories'    => 'CategoryController',
             'brands'        => 'BrandController',
