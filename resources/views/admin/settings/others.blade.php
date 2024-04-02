@@ -40,6 +40,13 @@
                 </div>
             </div>
         </div>
+        <div class="col-md-4">
+            <div class="form-group">
+                <label for="">Scroll Text</label>
+                <x-textarea name="scroll_text" id="scroll-text">{!! $scroll_text ?? '' !!}</x-textarea>
+                <x-error field="scroll_text" />
+            </div>
+        </div>
         <div class="col-md-6">
             <div class="form-group">
                 <label for="">Call For Order</label>

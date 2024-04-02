@@ -18,6 +18,17 @@
         ::placeholder {
             color: #ccc !important;
         }
+        @media (min-width: 1200px) {
+            .container {
+                max-width: 1250px;
+            }
+        }
+        .nav-links__item--has-submenu:hover .nav-links__submenu {
+            display: flex;
+            opacity: 1;
+            visibility: visible;
+            transform: rotateX(0deg);
+        }
         .page-header__container {
             padding-bottom: 12px;
         }

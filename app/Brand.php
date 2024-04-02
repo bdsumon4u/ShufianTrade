@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Brand extends Model
 {
     protected $fillable = [
-        'name', 'slug',
+        'name', 'slug', 'image_id',
     ];
 
     public static function booted()
@@ -31,5 +31,10 @@ class Brand extends Model
     public function products()
     {
         return $this->hasMany(Product::class);
+    }
+
+    public function image()
+    {
+        return $this->belongsTo(Image::class);
     }
 }

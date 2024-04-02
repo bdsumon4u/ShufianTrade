@@ -1,8 +1,8 @@
 <div class="nav-panel__departments">
     <!-- .departments -->
     <div
-        class="departments {{ request()->is('/') ? 'departments--opened departments--fixed' : '' }}"
-        data-departments-fixed-by="{{ request()->is('/') ? '.block-slideshow' : '' }}">
+        class="departments"
+        data-departments-fixed-by="">
         <div class="departments__body">
             <div class="departments__links-wrapper">
                 <ul class="departments__links">

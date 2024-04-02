@@ -96,7 +96,7 @@
             </ul>
           </li>
 
-          <li class="dropdown">
+          <li class="dropdown d-none">
             <a class="nav-link menu-title {{request()->is('admin/home-sections*') ? 'active' : '' }}" href="#">
               <i data-feather="layers"> </i><span>Home Sections</span>
               <div class="according-menu"><i class="fa fa-angle-{{request()->is('admin/home-sections*') ? 'down' : 'right' }}"></i></div>

@@ -14,7 +14,7 @@ class AddStatusAtColumnToOrdersTable extends Migration
     public function up()
     {
         Schema::table('orders', function (Blueprint $table) {
-            $table->timestamp('status_at')->useCurrent();
+            // $table->timestamp('status_at')->useCurrent();
         });
     }
 

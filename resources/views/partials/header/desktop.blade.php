@@ -3,88 +3,15 @@
         <!-- .topbar -->
         @include('partials.topbar')
         <!-- .topbar / end -->
-        <div class="site-header__middle container">
-            <div class="site-header__logo">
-                <a href="{{ url('/') }}">
-                    <img src="{{ asset($logo->desktop ?? '') }}" width="{{ config('services.logo.desktop.width', 260) }}" height="{{ config('services.logo.desktop.height', 54) }}" alt="Logo" style="max-width: 100%;">
-                </a>
-            </div>
-            <div class="site-header__search">
-                <div class="search">
-                    
-                    
-                    
-                    <form action="/shop">
-                        <div style="grid-area:search" class="md:ml-4"><div class="Searchbar__CustomCombobox-xnx3kr-6 joXPnU transition-all duration-75 ease-linear overflow-initial" data-reach-combobox="" data-state="idle"><div class="Searchbar__Container-xnx3kr-1 kWQExC" style="
-    display: flex;
-"><input name="search" aria-autocomplete="both" aria-controls="listbox--1" aria-expanded="false" aria-haspopup="listbox" aria-labelledby="demo" role="combobox" placeholder="Search for..." data-reach-combobox-input="" data-state="idle" value="{{ request('search') }}" style="
-    background-color: white;
-    letter-spacing: 0.025em;
-    font-weight: 500;
-    font-size: 0.875rem;
-    height: 40px;
-    display: flex;
-    flex: 1 1 0%;
-    padding: 0px 17px;
-    border: 2px solid purple;
-    border-radius: 4px 0px 0px 4px;
-    outline: none;
-    width: 100%;
-">
-
-<button type="submit" style="border: none; padding: 0;">
-    <figure color="black" class="Searchbar__Button-xnx3kr-3 duKdNo" style="
-    cursor: pointer;
-    display: flex;
-    -webkit-box-align: center;
-    align-items: center;
-    padding-right: 29px;
-    padding-left: 29px;
-    background: purple;
-    color: rgb(255, 255, 255);
-    height: 40px;
-    min-height: 100%;
-    margin: 0;
-"><svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 24 24" _css2="
-    @media (max-width: ,768px,) {
-      ,
-            font-size:20px;
-          ,
-    }
-  " class="Searchbar___StyledMdSearch-xnx3kr-5 fHBAIp" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg" style="
-    font-size: 25px;
-"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"></path></svg></figure>
-</button>
-
-</div></div> </div>
-                    </form>
-
-
-
-                    <!-- HTML Markup -->
-                    <!--<div class="aa-input-container" id="aa-input-container">-->
-                    <!--    <input type="search" id="aa-search-input" class="aa-input-search" placeholder="Search for products..." name="search" value="{{ request('search') }}" autocomplete="off" />-->
-                    <!--    <svg class="aa-input-icon" viewBox="654 -372 1664 1664">-->
-                    <!--        <path d="M1806,332c0-123.3-43.8-228.8-131.5-316.5C1586.8-72.2,1481.3-116,1358-116s-228.8,43.8-316.5,131.5  C953.8,103.2,910,208.7,910,332s43.8,228.8,131.5,316.5C1129.2,736.2,1234.7,780,1358,780s228.8-43.8,316.5-131.5  C1762.2,560.8,1806,455.3,1806,332z M2318,1164c0,34.7-12.7,64.7-38,90s-55.3,38-90,38c-36,0-66-12.7-90-38l-343-342  c-119.3,82.7-252.3,124-399,124c-95.3,0-186.5-18.5-273.5-55.5s-162-87-225-150s-113-138-150-225S654,427.3,654,332  s18.5-186.5,55.5-273.5s87-162,150-225s138-113,225-150S1262.7-372,1358-372s186.5,18.5,273.5,55.5s162,87,225,150s113,138,150,225  S2062,236.7,2062,332c0,146.7-41.3,279.7-124,399l343,343C2305.7,1098.7,2318,1128.7,2318,1164z" />-->
-                    <!--    </svg>-->
-                    <!--</div>-->
-                </div>
-            </div>
-            <div class="site-header__phone d-none">
-                <div class="site-header__phone-title">Customer Service</div>
-                <div class="site-header__phone-number">
-                    <div class="topbar__item topbar__item--link">
-                        <img style="height: 35px;" class="img-responsive " src="https://www.himelshop.com/front_asset/call-now.gif" alt="Call 7colors" title="7colors">&nbsp;
-                        <a style="font-family: monospace; font-size: 16px;" class="topbar-link" href="tel:{{ $company->phone ?? '' }}">{{ $company->phone ?? '' }}</a>
-                    </div>
-                </div>
-            </div>
-        </div>
         <div class="site-header__nav-panel">
             <div class="nav-panel">
                 <div class="nav-panel__container container">
                     <div class="nav-panel__row">
-                        @include('partials.departments')
+                        <div class="site-header__logo">
+                            <a href="{{ url('/') }}">
+                                <img src="{{ asset($logo->desktop ?? '') }}" width="{{ config('services.logo.desktop.width', 260) }}" height="{{ config('services.logo.desktop.height', 54) }}" alt="Logo" style="max-width: 100%;">
+                            </a>
+                        </div>
                         <!-- .nav-links -->
                         @include('partials.header.menu.desktop')
                         <!-- .nav-links / end -->
@@ -120,8 +47,27 @@
                                     </div><!-- .dropcart / end -->
                                 </div>
                             </div>
+                            <div style="width: 5px;"></div>
+                            <div class="indicator indicator--trigger--click">
+                                <a href="#" class="indicator__button">
+                                    <span class="indicator__area">
+                                        <svg aria-hidden="true" data-prefix="fas" data-icon="search" class="svg-inline--fa fa-search fa-w-16" style="width: 25px; top: 3px; position: relative;" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+                                            <path fill="currentColor" d="M505 443L405 343c-4-4-10-7-17-7h-16a208 208 0 1 0-36 36v16c0 7 3 13 7 17l100 100c9 9 24 9 34 0l28-28c9-10 9-25 0-34zM208 336a128 128 0 1 1 0-256 128 128 0 0 1 0 256z"></path>
+                                        </svg>
+                                    </span>
+                                </a>
+                                <div class="indicator__dropdown" style="width: 1250px; padding: 0 250px;">
+                                    <form action="/shop" method="get" style="background: white; padding: 1rem;" class="shadow d-flex">
+                                        <input type="search" name="search" id="" class="form-control form-control-lg mr-1">
+                                        <button class="btn btn-lg btn-dark ml-1">
+                                            <svg aria-hidden="true" data-prefix="fas" data-icon="search" width="24" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+                                                <path fill="currentColor" d="M505 443L405 343c-4-4-10-7-17-7h-16a208 208 0 1 0-36 36v16c0 7 3 13 7 17l100 100c9 9 24 9 34 0l28-28c9-10 9-25 0-34zM208 336a128 128 0 1 1 0-256 128 128 0 0 1 0 256z"></path>
+                                            </svg>
+                                        </button>
+                                    </form>
+                                </div>
+                            </div>
                         </div>
-                        @include('partials.auth-indicator')
                     </div>
                 </div>
             </div>

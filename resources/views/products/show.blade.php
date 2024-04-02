@@ -3,6 +3,7 @@
 @push('styles')
     <link rel="stylesheet" href="{{ asset('strokya/vendor/xzoom/xzoom.css') }}">
     <link rel="stylesheet" href="{{ asset('strokya/vendor/xZoom-master/example/css/demo.css') }}">
+    <link rel="stylesheet" href="{{ asset('strokya/css/sagartex.css') }}">
     <style>
         #accordion .card-link {
             display: block;
@@ -73,7 +74,7 @@
                     <!-- .product__info -->
                     <div class="product__info">
                         <h1 class="product__name">{{ $product->name }}</h1>
-                        <div class="w-100 mb-2 border-top pt-2">Product Code: <strong>{{ $product->sku }}</strong></div>
+                        <div class="w-100 mb-2 border-top pt-2">Model: <strong>{{ $product->sku }}</strong></div>
                         <div class="product__prices {{$product->selling_price == $product->price ? '' : 'has-special'}}">
                             Price:
                             @if($product->selling_price == $product->price)

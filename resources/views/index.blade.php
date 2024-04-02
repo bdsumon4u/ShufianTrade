@@ -2,50 +2,103 @@
 
 @section('title', 'Home')
 
+@push('styles')
+<link rel="stylesheet" href="{{asset('strokya/css/sagartex.css')}}">
+@endpush
+
 @section('content')
 
 @include('partials.slides')
 
-<!-- .block-features -->
-<div class="block block-features block-features--layout--classic d-none d-md-block">
-    <div class="container">
-        <div class="block-features__list">
-            @if($services = setting('services'))
-                @foreach(config('services.services', []) as $num => $icon)
-                    <div class="block-features__item">
-                        <div class="block-features__icon">
-                            <svg width="48px" height="48px">
-                                <use xlink:href="{{ asset($icon) }}"></use>
-                            </svg>
-                        </div>
-                        <div class="block-features__content">
-                            <div class="block-features__title">{{ $services->$num->title }}</div>
-                            <div class="block-features__subtitle">{{ $services->$num->detail }}</div>
-                        </div>
+<div class="wrapper container">
+	<ul class="page_home">
+		<li class="body_content row">
+			<ul class="right pr-4 col-md-3 d-none d-md-flex">
+				<div class="category inner_bg border_radius_5_full">
+					<div class="ltitle fpink txt_shadow_white bottom_grey_border">Product Categories</div>
+					<ul class="top_white_border">
+                        @foreach (\App\Category::all() as $category)
+						<li>
+                            <a class='main_menu' href='{{route('categories.products',$category)}}' title='{{$category->name}}'>{{$category->name}}</a>
+                        </li>
+                        @endforeach
+                    </ul>
+				</div>
+			</ul>
+			<ul class="left col-md-9">
+				<li class="product inner_bg border_radius_5_full">
+					<div class="ltitle fpink txt_shadow_white bottom_grey_border">
+                        @if(request('search'))
+                        Found {{ $products->total() }} result(s) for "{{ request('search', 'NULL') }}"
+                        @elseif($category = request()->route()->parameter('category'))
+                        Showing from "{{ $category->name }}" category.
+                        @elseif($brand = request()->route()->parameter('brand'))
+                        Showing from "{{ $brand->name }}" brand.
+                        @else
+                        Latest Products
+                        @endif
                     </div>
-                    @if(!$loop->last)
-                        <div class="block-features__divider"></div>
-                    @endif
-                @endforeach
-            @endif
-        </div>
+					<ul class="row">
+                        @foreach($products as $product)
+                        <li class="content top_white_border col-md-6">
+							<ul>
+								<li class="itm">
+									<a href="{{route('products.show',$product)}}" title="{{$product->name}}">
+										<img src="{{ $product->base_image->src }}" alt="{{$product->name}}" />
+									</a>
+								</li>
+								<li class="info">
+									<ul>
+										<li>
+											<a class="stitle" href="{{route('products.show',$product)}}" title="{{$product->name}}">
+                                                {{$product->name}}
+                                            </a>
+										</li>
+										<li class="stitle">Price:
+                                            @if($product->selling_price == $product->price)
+                                                {!!  theMoney($product->price)  !!}
+                                            @else
+                                                <span class="product-card__new-price">{!! theMoney($product->selling_price) !!}</span>
+                                                &nbsp;
+                                                <span class="product-card__old-price">{!! $product->price !!}</span>
+                                            @endif
+                                        </li>
+										<li>Availability:
+                                            @if(! $product->should_track)
+                                                <span class="text-success">In Stock</span>
+                                            @else
+                                                <span class="text-{{ $product->stock_count ? 'success' : 'danger' }}">{{ $product->stock_count }} In Stock</span>
+                                            @endif
+                                        </li>
+										<li><a class="bblue" href="{{route('products.show',$product)}}" title="{{$product->name}}">Show Deatils</a></li>
+									</ul>
+								</li>
+							</ul>
+						</li>
+                        @endforeach
+                        <li class="clear_less_height">&nbsp;</li>
+					</ul>
+				</li>
+			</ul>
+		</li>
+		
+		<li class="clear_less_height">&nbsp;</li>
+	</ul>
+</div>
+
+<div class="container">
+    <div class="px-3 py-3 bg-light my-2">
+        <h5 class="text-center my-2">Our Brands</h5>
+        <marquee behavior="" direction="">
+            @foreach (\App\Brand::all() as $brand)
+                @if($src = optional($brand->image)->src)
+                    <a href="{{route('brands.products', $brand)}}">
+                        <img src="{{asset($src)}}" alt="{{$brand->name}}" height="150" width="150" class="mr-3">
+                    </a>
+                @endif
+            @endforeach
+        </marquee>
     </div>
-</div><!-- .block-features / end -->
-@foreach($sections as $section)
-<!-- .block-products-carousel -->
-@includeWhen($section->type == 'carousel-grid', 'partials.products.carousel.grid', [
-    'title' => $section->title,
-    'products' => $section->products(),
-    'rows' => optional($section->data)->rows,
-    'cols' => optional($section->data)->cols,
-])
-@includeWhen($section->type == 'pure-grid', 'partials.products.pure-grid', [
-    'title' => $section->title,
-    'products' => $section->products(),
-    'rows' => optional($section->data)->rows,
-    'cols' => optional($section->data)->cols,
-])
-<!-- .block-products-carousel / end -->
-@endforeach
+</div>
 
 @endsection

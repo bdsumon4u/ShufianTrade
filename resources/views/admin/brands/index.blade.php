@@ -105,6 +105,19 @@
                                                         <span class="invalid-feedback">{{ $message }}</span>
                                                     @enderror
                                                 </div>
+                                                <div class="form-group">
+                                                    <!-- Button to Open the Modal -->
+                                                    <label for="base_image" class="d-block"><strong>Brand Image</strong></label>
+                                                    <button type="button" class="btn single @if(old('base_image_src')) d-none @endif btn-light" data-toggle="modal" data-target="#single-picker" style="height: 150px; width: 150px; background: transparent;">
+                                                        <i class="fa fa-image fa-4x text-secondary"></i>
+                                                    </button>
+                                                    <img src="{{ old('base_image_src') }}" alt="Base Image" data-toggle="modal" data-target="#single-picker" id="base_image-preview" class="img-thumbnail img-responsive" style="display: {{ old('base_image_src') ? '' : 'none' }}; height: 150px; width: 150px; cursor: pointer;">
+                                                    <input type="hidden" name="base_image_src" value="{{ old('base_image_src') }}">
+                                                    <input type="hidden" name="base_image" value="{{ old('base_image') }}" class="@error('base_image') is-invalid @enderror" id="base-image" class="form-control">
+                                                    @error('base_image')
+                                                        <span class="invalid-feedback">{{ $message }}</span>
+                                                    @enderror
+                                                </div>
                                                 <button type="submit" class="btn btn-sm btn-success d-block ml-auto"><i class="fa fa-check"></i> Submit</button>
                                             </form>
                                         </div>
@@ -128,6 +141,19 @@
                                                         <span class="invalid-feedback">{{ $message }}</span>
                                                     @enderror
                                                 </div>
+                                                <div class="form-group">
+                                                    <!-- Button to Open the Modal -->
+                                                    <label for="base_image" class="d-block"><strong>Brand Image</strong></label>
+                                                    <button type="button" class="btn single @if(old('base_image_src')) d-none @endif btn-light" data-toggle="modal" data-target="#single-picker" style="height: 150px; width: 150px; background: transparent;">
+                                                        <i class="fa fa-image fa-4x text-secondary"></i>
+                                                    </button>
+                                                    <img src="{{ old('base_image_src') }}" alt="Base Image" data-toggle="modal" data-target="#single-picker" id="base_image-preview" class="img-thumbnail img-responsive" style="display: {{ old('base_image_src') ? '' : 'none' }}; height: 150px; width: 150px; cursor: pointer;">
+                                                    <input type="hidden" name="base_image_src" value="{{ old('base_image_src') }}">
+                                                    <input type="hidden" name="base_image" value="{{ old('base_image') }}" class="@error('base_image') is-invalid @enderror" id="base-image" class="form-control">
+                                                    @error('base_image')
+                                                        <span class="invalid-feedback">{{ $message }}</span>
+                                                    @enderror
+                                                </div>
                                                 <button type="submit" class="btn btn-sm btn-success d-block ml-auto"><i class="fa fa-check"></i> Submit</button>
                                             </form>
                                         </div>
@@ -142,6 +168,7 @@
         </div>
     </div>
 </div>
+@include('admin.images.single-picker', ['selected' => old('base_image')])
 @endsection
 
 @push('scripts')

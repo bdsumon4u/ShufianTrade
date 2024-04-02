@@ -14,8 +14,8 @@ class AddStaffColumnToAdminsTable extends Migration
     public function up()
     {
         Schema::table('admins', function (Blueprint $table) {
-            $table->tinyInteger('role_id')->after('password')->default(1);
-            $table->boolean('is_active')->after('role_id')->default(true);
+            // $table->tinyInteger('role_id')->after('password')->default(1);
+            // $table->boolean('is_active')->after('role_id')->default(true);
         });
     }
 

@@ -2,91 +2,84 @@
 
 @section('title', 'Products')
 
+@push('styles')
+<link rel="stylesheet" href="{{asset('strokya/css/sagartex.css')}}">
+@endpush
+
 @section('content')
-
-@include('partials.page-header', [
-    'paths' => [
-        url('/') => 'Home',
-    ],
-    'active' => 'Products',
-    'page_title' => 'Products'
-])
-
-<div class="block">
-    <div class="products-view">
-        <div class="container">
-            <div class="row">
-                <div class="col">
-                    <div class="products-view__options">
-                        <div class="view-options">
-                            <div class="view-options__legend">
-                                @if(request('search'))
-                                Found {{ $products->total() }} result(s) for "{{ request('search', 'NULL') }}"
-                                @elseif($category = request()->route()->parameter('category'))
-                                Showing from "{{ $category->name }}" category.
-                                @elseif($brand = request()->route()->parameter('brand'))
-                                Showing from "{{ $brand->name }}" brand.
-                                @else
-                                Showing {{ $products->count() }} of {{ $products->total() }} products
-                                @endif
-                            </div>
-                            <div class="view-options__divider"></div>
-                            <!-- <div class="view-options__control">
-                                <label for="">Sort By</label>
-                                <div>
-                                    <select class="form-control form-control-sm" name="" id="">
-                                        <option value="">Default</option>
-                                        <option value="">Name (A-Z)</option>
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="view-options__control">
-                                <label for="">Show</label>
-                                <div>
-                                    <select class="form-control form-control-sm" name="" id="">
-                                        <option value="">15</option>
-                                        <option value="">20</option>
-                                        <option value="">25</option>
-                                        <option value="">30</option>
-                                    </select>
-                                </div>
-                            </div> -->
-                        </div>
+<div class="wrapper container">
+	<ul class="page_home">
+		<li class="body_content row">
+			<ul class="right pr-4 col-md-3 d-none d-md-flex">
+				<div class="category inner_bg border_radius_5_full">
+					<div class="ltitle fpink txt_shadow_white bottom_grey_border">Product Categories</div>
+					<ul class="top_white_border">
+                        @foreach (\App\Category::all() as $category)
+						<li>
+                            <a class='main_menu' href='{{route('categories.products',$category)}}' title='{{$category->name}}'>{{$category->name}}</a>
+                        </li>
+                        @endforeach
+                    </ul>
+				</div>
+			</ul>
+			<ul class="left col-md-9">
+				<li class="product inner_bg border_radius_5_full">
+					<div class="ltitle fpink txt_shadow_white bottom_grey_border">
+                        @if(request('search'))
+                        Found {{ $products->total() }} result(s) for "{{ request('search', 'NULL') }}"
+                        @elseif($category = request()->route()->parameter('category'))
+                        Showing from "{{ $category->name }}" category.
+                        @elseif($brand = request()->route()->parameter('brand'))
+                        Showing from "{{ $brand->name }}" brand.
+                        @else
+                        Latest Products
+                        @endif
                     </div>
-                </div>
-            </div>
-        </div>
-        @include('partials.products.pure-grid', [
-            'title' => null
-        ])
-        <div class="container">
-            <div class="row">
-                <div class="col">
-                    <div class="products-view__pagination pt-0">
-                        <!-- <ul class="pagination justify-content-center">
-                            <li class="page-item disabled">
-                                <a class="page-link page-link--with-arrow" href="#" aria-label="Previous">
-                                    <svg class="page-link__arrow page-link__arrow--left" aria-hidden="true" width="8px" height="13px">
-                                        <use xlink:href="{{ asset('strokya/images/sprite.svg#arrow-rounded-left-8x13') }}"></use>
-                                    </svg>
-                                </a>
-                            </li>
-                            <li class="page-item"><a class="page-link" href="#">1</a></li>
-                            <li class="page-item active"><a class="page-link" href="#">2 <span class="sr-only">(current)</span></a></li>
-                            <li class="page-item"><a class="page-link" href="#">3</a></li>
-                            <li class="page-item">
-                                <a class="page-link page-link--with-arrow" href="#" aria-label="Next">
-                                    <svg class="page-link__arrow page-link__arrow--right" aria-hidden="true" width="8px" height="13px">
-                                        <use xlink:href="{{ asset('strokya/images/sprite.svg#arrow-rounded-right-8x13') }}"></use>
-                                    </svg>
-                                </a>
-                            </li>
-                        </ul> -->
-                        {!! $products->links() !!}
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
+					<ul class="row">
+                        @foreach($products as $product)
+                        <li class="content top_white_border col-md-6">
+							<ul>
+								<li class="itm">
+									<a href="{{route('products.show',$product)}}" title="{{$product->name}}">
+										<img src="{{ $product->base_image->src }}" alt="{{$product->name}}" />
+									</a>
+								</li>
+								<li class="info">
+									<ul>
+										<li>
+											<a class="stitle" href="{{route('products.show',$product)}}" title="{{$product->name}}">
+                                                {{$product->name}}
+                                            </a>
+										</li>
+										<li class="stitle">Price:
+                                            @if($product->selling_price == $product->price)
+                                                {!!  theMoney($product->price)  !!}
+                                            @else
+                                                <span class="product-card__new-price">{!! theMoney($product->selling_price) !!}</span>
+                                                &nbsp;
+                                                <span class="product-card__old-price">{!! $product->price !!}</span>
+                                            @endif
+                                        </li>
+										<li>Availability:
+                                            @if(! $product->should_track)
+                                                <span class="text-success">In Stock</span>
+                                            @else
+                                                <span class="text-{{ $product->stock_count ? 'success' : 'danger' }}">{{ $product->stock_count }} In Stock</span>
+                                            @endif
+                                        </li>
+										<li><a class="bblue" href="{{route('products.show',$product)}}" title="{{$product->name}}">Show Deatils</a></li>
+									</ul>
+								</li>
+							</ul>
+						</li>
+                        @endforeach
+                        <li class="clear_less_height">&nbsp;</li>
+					</ul>
+				</li>
+			</ul>
+		</li>
+		
+		<li class="clear_less_height">&nbsp;</li>
+	</ul>
 </div>
 @endsection

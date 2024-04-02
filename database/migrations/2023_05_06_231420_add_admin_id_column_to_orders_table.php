@@ -14,12 +14,12 @@ class AddAdminIdColumnToOrdersTable extends Migration
     public function up()
     {
         Schema::table('orders', function (Blueprint $table) {
-            $table->foreignId('admin_id')
-                ->nullable()
-                ->after('id')
-                ->constrained('admins')
-                ->onDelete('set null')
-                ->onUpdate('cascade');
+            // $table->foreignId('admin_id')
+            //     ->nullable()
+            //     ->after('id')
+            //     ->constrained('admins')
+            //     ->onDelete('set null')
+            //     ->onUpdate('cascade');
         });
     }
 

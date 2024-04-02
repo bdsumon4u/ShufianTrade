@@ -24,34 +24,22 @@
                 <div class="card-header p-3">Edit Slide</div>
                 <div class="card-body p-3">
                     <x-form method="patch" :action="route('admin.slides.update', $slide)" has-files>
-                        <div class="form-group">
-                            <x-label for="title" />
-                            <x-input name="title" :value="$slide->title" />
-                            <x-error field="title" />
-                        </div>
-                        <div class="form-group">
-                            <x-label for="text" />
-                            <x-textarea name="text">{{ $slide->text }}</x-textarea>
-                            <x-error field="title" />
+                        <div class="form-row">
+                            <div class="col-md-6 form-group">
+                                <x-label for="title" />
+                                <x-input name="title" :value="$slide->title" />
+                                <x-error field="title" />
+                            </div>
+                            <div class="col-md-6 form-group">
+                                <label for="btn_href">Link</label>
+                                <x-input name="btn_href" :value="$slide->btn_href" />
+                            </div>
                         </div>
                         <div class="form-group">
                             <div class="checkbox checkbox-secondary">
+                                <input type="hidden" name="is_active" value="0">
                                 <x-checkbox name="is_active" value="1" :checked="$slide->is_active" />
                                 <x-label for="is_active" />
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <x-label for="btn_name" />
-                                    <x-input name="btn_name" :value="$slide->btn_name" />
-                                </div>
-                                </div>
-                                    <div class="col-md-6">
-                                <div class="form-group">
-                                    <x-label for="btn_href">Button Link</x-label>
-                                    <x-input name="btn_href" :value="$slide->btn_href" />
-                                </div>
                             </div>
                         </div>
                         <div class="form-group">
