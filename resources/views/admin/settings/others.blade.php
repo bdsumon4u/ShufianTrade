@@ -47,14 +47,21 @@
                 <x-error field="scroll_text" />
             </div>
         </div>
-        <div class="col-md-6">
+        <div class="col-md-4">
+            <div class="form-group">
+                <label for="">WhatsApp Number</label>
+                <x-input name="whatsapp_number" id="whatsapp_number" :value="$whatsapp_number ?? null" />
+                <x-error field="whatsapp_number" />
+            </div>
+        </div>
+        <div class="col-md-4">
             <div class="form-group">
                 <label for="">Call For Order</label>
                 <x-input name="call_for_order" id="call_for_order" :value="$call_for_order ?? null" />
                 <x-error field="call_for_order" />
             </div>
         </div>
-        <div class="col-md-6">
+        <div class="col-md-4">
             <div class="form-group">
                 <label for="">Pixel IDs</label>
                 <x-input name="pixel_ids" id="pixel_ids" :value="$pixel_ids ?? null" />

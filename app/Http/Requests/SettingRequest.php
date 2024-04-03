@@ -42,6 +42,7 @@ class SettingRequest extends FormRequest
             'related_products.cols' => 'required|integer',
 
             'call_for_order' => 'sometimes',
+            'whatsapp_number' => 'sometimes',
             'scroll_text' => 'sometimes',
             'pixel_ids' => 'sometimes',
 
