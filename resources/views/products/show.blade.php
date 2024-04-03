@@ -19,6 +19,11 @@
             border-bottom: 2px solid #000;
             color: #000;
         }
+        @media (min-width: 767px) {
+            .product__name {
+                font-size: 28px;
+            }
+        }
 
         @media (max-width: 768px) {
             .product__option-label {
@@ -33,7 +38,7 @@
             }
         }
         .product__content {
-            grid-template-columns: [gallery] calc(40% - 30px) [info] calc(40% - 35px) [sidebar] calc(25% - 10px);
+            grid-template-columns: [gallery] calc(50% - 30px) [info] calc(50% - 35px);
             grid-column-gap: 10px;
         }
 
@@ -75,6 +80,23 @@
                     <div class="product__info">
                         <h1 class="product__name">{{ $product->name }}</h1>
                         <div class="w-100 mb-2 border-top pt-2">Model: <strong>{{ $product->sku }}</strong></div>
+                        
+                        <div class="product__footer mt-0">
+                            <div class="product__tags tags">
+                                @if($product->brand)
+                                    <p class="text-secondary mb-2">
+                                        Brand: <a href="{{ route('brands.products', $product->brand) }}" class="text-primary badge badge-light"><big>{{ $product->brand->name }}</big></a>
+                                    </p>
+                                @endif
+                                <div class="">
+                                    <p class="text-secondary mb-2 d-inline-block mr-2">Categories:</p>
+                                    @foreach($product->categories as $category)
+                                        <a href="{{ route('categories.products', $category) }}" class="badge badge-primary">{{ $category->name }}</a>
+                                    @endforeach
+                                </div>
+                            </div>
+                        </div>
+
                         <div class="product__prices {{$product->selling_price == $product->price ? '' : 'has-special'}}">
                             Price:
                             @if($product->selling_price == $product->price)
@@ -113,11 +135,11 @@
                                     </div>
                                     <div class="product__actions overflow-hidden">
                                         @exp($available = !$product->should_track || $product->stock_count > 0)
-                                        <div class="product__buttons w-100">
-                                            <div class="product__actions-item product__actions-item--ordernow">
+                                        <div class="product__buttons w-100 d-flex">
+                                            <div class="w-100 product__actions-item product__actions-item--ordernow">
                                                 <button class="btn btn-primary product__ordernow btn-lg btn-block" {{ $available ? '' : 'disabled' }}>অর্ডার করুন</button>
                                             </div>
-                                            <div class="product__actions-item product__actions-item--addtocart">
+                                            <div class="w-100 product__actions-item product__actions-item--addtocart">
                                                 <button class="btn btn-primary product__addtocart btn-lg btn-block" {{ $available ? '' : 'disabled' }}>কার্টে যোগ করুন</button>
                                             </div>
                                         </div>
@@ -129,7 +151,7 @@
                                         {!! implode('<br>', explode(' ', setting('call_for_order'))) !!}
                                     </div> --}}
                                     @foreach (explode(' ', setting('call_for_order')) as $phone)
-                                        <a href="tel:{{$phone}}" class="btn ptn-primary text-white w-100 mb-1" style="background: #008acf; height: auto;">
+                                        <a href="tel:{{$phone}}" class="btn ptn-primary text-dark w-100 mb-1" style="background: #eeffff; height: auto; border-color: #dedede;">
                                             <div>কল করতে ক্লিক করুন</div>
                                             <div>
                                                 <i class="fa fas fa-phone mr-2"></i>
@@ -140,45 +162,7 @@
                                 </div>
                             </form><!-- .product__options / end -->
                         </div><!-- .product__end -->
-
-                        <div class="product__footer mt-0">
-                            <div class="product__tags tags">
-                                @if($product->brand)
-                                    <p class="text-secondary mb-2">
-                                        Brand: <a href="{{ route('brands.products', $product->brand) }}" class="text-primary badge badge-light"><big>{{ $product->brand->name }}</big></a>
-                                    </p>
-                                @endif
-                                <div class="">
-                                    <p class="text-secondary mb-2 d-inline-block mr-2">Categories:</p>
-                                    @foreach($product->categories as $category)
-                                        <a href="{{ route('categories.products', $category) }}" class="badge badge-primary">{{ $category->name }}</a>
-                                    @endforeach
-                                </div>
-                            </div>
-                        </div>
                     </div><!-- .product__info / end -->
-                    <div>
-                        <div class="block-features__list flex-column d-block">
-                            @if($services = setting('services'))
-                                @foreach(config('services.services', []) as $num => $icon)
-                                    <div class="block-features__item">
-                                        <div class="block-features__icon">
-                                            <svg width="48px" height="48px">
-                                                <use xlink:href="{{ asset($icon) }}"></use>
-                                            </svg>
-                                        </div>
-                                        <div class="block-features__content">
-                                            <div class="block-features__title">{{ $services->$num->title }}</div>
-                                            <div class="block-features__subtitle">{{ $services->$num->detail }}</div>
-                                        </div>
-                                    </div>
-                                    @if(!$loop->last)
-                                        <div class="block-features__divider"></div>
-                                    @endif
-                                @endforeach
-                            @endif
-                        </div>
-                    </div>
                 </div>
             </div>
             <div id="accordion" class="mt-3">

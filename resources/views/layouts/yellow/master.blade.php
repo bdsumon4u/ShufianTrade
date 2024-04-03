@@ -18,6 +18,9 @@
         ::placeholder {
             color: #ccc !important;
         }
+        .topbar__item {
+            flex: none;
+        }
         @media (min-width: 1200px) {
             .container {
                 max-width: 1250px;
