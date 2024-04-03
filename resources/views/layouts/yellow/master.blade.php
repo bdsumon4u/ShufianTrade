@@ -18,6 +18,11 @@
         ::placeholder {
             color: #ccc !important;
         }
+        .site {
+            max-height: 100vh;
+            background: url('{{asset($logo->background??'')??''}}') no-repeat scroll center top #F0F0F0;
+            overflow-y: scroll;
+        }
         .topbar__item {
             flex: none;
         }

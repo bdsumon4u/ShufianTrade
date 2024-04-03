@@ -62,7 +62,7 @@
     ])
 
     <div class="block">
-        <div class="container">
+        <div class="container pb-3" style="background: #eeffff;">
             <div class="product product--layout--standard" data-layout="standard">
                 <div class="product__content" data-id="{{ $product->id }}" data-max="{{ $product->should_track ? $product->stock_count : -1 }}">
                     <div class="xzoom-container">

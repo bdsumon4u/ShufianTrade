@@ -1,5 +1,5 @@
 <div class="page-header">
-    <div class="page-header__container container">
+    <div class="page-header__container container" style="background: #eeffff;">
         <div class="page-header__breadcrumb">
             <nav aria-label="breadcrumb">
                 <ol class="breadcrumb">

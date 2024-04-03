@@ -67,5 +67,14 @@ class SettingController extends Controller
                 'height' => config('services.logo.favicon.height', 56),
             ]);
         }
+
+        if ($type == 'background') {
+            return $this->uploadImage($file, [
+                'dir' => 'logo',
+                'resize' => false,
+                // 'width' => config('services.logo.favicon.width', 56),
+                // 'height' => config('services.logo.favicon.height', 56),
+            ]);
+        }
     }
 }

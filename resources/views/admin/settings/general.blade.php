@@ -35,6 +35,13 @@
                 <img src="{{ asset($logo->favicon ?? '') ?? '' }}" alt="Favicon" class="img-responsive d-block" width="{{ config('services.logo.favicon.width', 56) }}" height="{{ config('services.logo.favicon.height', 56) }}" style="@unless($logo->favicon ?? '') display:none; @endunless">
             </div>
         </div>
+        <div class="col-md-12">
+            <div class="form-group">
+                <label for="background-logo" class="d-block">Background Image</label>
+                <input type="file" name="logo[background]" id="background-logo" class="form-control mb-1 @if($logo->background ?? '') d-none @endif">
+                <img src="{{ asset($logo->background ?? '') ?? '' }}" alt="Background Image" class="img-responsive" width="100%" style="@if($logo->background ?? '') display:block; @else display:none; @endif">
+            </div>
+        </div>
     </div>
     <button type="submit" class="btn btn-success">Save</button>
 </div>
