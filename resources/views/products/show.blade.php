@@ -38,7 +38,7 @@
             }
         }
         .product__content {
-            grid-template-columns: [gallery] calc(50% - 30px) [info] calc(50% - 35px);
+            grid-template-columns: [gallery] calc(40% - 30px) [info] calc(64% - 35px);
             grid-column-gap: 10px;
         }
 
