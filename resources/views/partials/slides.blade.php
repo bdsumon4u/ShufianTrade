@@ -4,9 +4,6 @@
     *	template Tick
     */
     @import url(https://fonts.googleapis.com/css?family=Marck+Script&subset=latin,cyrillic,latin-ext);
-    #slideshow-container {
-        padding: 1px;
-    }
     #wowslider-container1 { 
         display: table;
         zoom: 1; 

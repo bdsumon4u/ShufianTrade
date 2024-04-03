@@ -21,6 +21,7 @@
         .site {
             max-height: 100vh;
             background: url('{{asset($logo->background??'')??''}}') no-repeat scroll center top #F0F0F0;
+            background-size: cover;
             overflow-y: scroll;
         }
         .topbar__item {
