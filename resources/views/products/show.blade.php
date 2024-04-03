@@ -151,7 +151,7 @@
                                         {!! implode('<br>', explode(' ', setting('call_for_order'))) !!}
                                     </div> --}}
                                     @foreach (explode(' ', setting('call_for_order')) as $phone)
-                                        <a href="tel:{{$phone}}" class="btn ptn-primary text-dark w-100 mb-1" style="background: #eeffff; height: auto; border-color: #dedede;">
+                                        <a href="tel:{{$phone}}" class="btn ptn-primary text-dark w-100 mb-1" style="background: #dedede; height: auto; border-color: #dedede;">
                                             <div>কল করতে ক্লিক করুন</div>
                                             <div>
                                                 <i class="fa fas fa-phone mr-2"></i>
