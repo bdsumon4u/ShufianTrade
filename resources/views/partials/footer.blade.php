@@ -39,7 +39,7 @@
                                     </a>
                                 </li>
                                 <li class="footer-newsletter__social-link footer-newsletter__social-link--phone">
-                                    <a href="mailto:{{$company->email}}" target="_blank" class="bg-secondary">
+                                    <a href="mailto:{{$company->email}}" target="_blank" class="bg-danger">
                                         <i class="fas fa-envelope"></i>
                                     </a>
                                 </li>

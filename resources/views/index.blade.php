@@ -93,7 +93,7 @@
             @foreach (\App\Brand::all() as $brand)
                 @if($src = optional($brand->image)->src)
                     <a href="{{route('brands.products', $brand)}}">
-                        <img src="{{asset($src)}}" alt="{{$brand->name}}" height="150" width="150" class="mr-3">
+                        <img src="{{asset($src)}}" alt="{{$brand->name}}" height="100" width="100" class="mr-3">
                     </a>
                 @endif
             @endforeach
