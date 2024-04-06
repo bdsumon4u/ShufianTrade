@@ -531,6 +531,12 @@
     >
         <i class="fab fa-whatsapp" style="margin-top: 1rem;"></i>
     </a>
+    <a
+        href="https://api.whatsapp.com/send?phone={{$phone}}" target="_blank" class="wa__btn_popup_txt" style="display: block;left: unset;right: 100%;margin-right: 7px;margin-left: 0px;width: 155px;position: fixed;right: 95px;bottom: 60px;font-size: 12px;"><span style="
+    background: #f5f7f9;
+    padding: 8px 10px;
+    border-radius: 4px;
+">Need Help? <strong>Chat with us</strong></span></a>
     @endif
 </body>
 
