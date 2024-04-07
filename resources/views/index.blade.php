@@ -89,7 +89,7 @@
 <div class="container">
     <div class="px-3 py-3 bg-light my-2">
         <h5 class="text-center my-2">Our Brands</h5>
-        <marquee behavior="" direction="">
+        <marquee behavior="alternate" direction="" onmouseover="this.stop();" onmouseout="this.start();">
             @foreach (\App\Brand::all() as $brand)
                 @if($src = optional($brand->image)->src)
                     <a href="{{route('brands.products', $brand)}}">
