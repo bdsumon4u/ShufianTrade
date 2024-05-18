@@ -34,7 +34,7 @@ class ProductRequest extends FormRequest
             'slug' => 'required|max:255|unique:products',
             'description' => 'required',
             'categories' => 'required|array',
-            'brand' => 'required|integer',
+            'brand' => 'nullable|integer',
             'price' => 'required|integer',
             'selling_price' => 'required|integer',
             'sku' => 'required|unique:products',
@@ -59,7 +59,7 @@ class ProductRequest extends FormRequest
             'is_active' => 0,
         ];
 
-        $data['brand_id']    = $data['brand'];
+        $data['brand_id']    = $data['brand'] ?? null;
         $data['stock_count'] = intval($data['stock_count']);
 
         return $data;

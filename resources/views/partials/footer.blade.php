@@ -1,7 +1,7 @@
 <footer class="site__footer">
     <div class="site-footer">
         <div class="container">
-            <div class="site-footer__widgets">
+            <div class="site-footer__widgets p-0 pt-3">
                 <div class="row justify-content-between">
                     <div class="col-12 col-md-6 col-lg-4">
                         <div class="site-footer__widget footer-contacts">
@@ -16,7 +16,7 @@
                     </div>
                     @if($menuItems->isNotEmpty())
                     <div class="col-12 col-md-6 col-lg-4">
-                        <div class="site-footer__widget footer-links">
+                        <div class="site-footer__widget footer-links mt-2">
                             <h5 class="footer-links__title">Quick Links</h5>
                             <ul class="footer-links__list">
                                 @foreach($menuItems as $item)
@@ -29,10 +29,10 @@
                     </div>
                     @endif
                     <div class="col-12 col-md-6 col-lg-4">
-                        <div class="site-footer__widget footer-newsletter">
+                        <div class="site-footer__widget footer-newsletter mt-2">
                             <h5 class="footer-newsletter__title">Socials</h5>
-                            <div class="footer-newsletter__text footer-newsletter__text--social">Follow us on social networks</div>
-                            <ul class="footer-newsletter__social-links">
+                            <div class="footer-newsletter__text footer-newsletter__text--social m-0">Follow us on social networks</div>
+                            <ul class="footer-newsletter__social-links m-0">
                                 <li class="footer-newsletter__social-link footer-newsletter__social-link--phone">
                                     <a href="tel:{{$company->phone}}" target="_blank" class="bg-primary">
                                         <i class="fas fa-phone"></i>
@@ -70,11 +70,11 @@
                     </div>
                 </div>
             </div>
-            <div class="site-footer__bottom">
+            <div class="site-footer__bottom py-2">
                 <div class="site-footer__copyright">
                     Copyright 2020 - {{ date('Y') }} &copy; {{ $company->name ?? '' }}
                 </div>
-                <div class="site-footer__payments">
+                <div class="site-footer__payments mb-2">
                     Developed By <a href="https://cyber32.com" class="text-danger">Cyber 32</a>
                 </div>
             </div>
