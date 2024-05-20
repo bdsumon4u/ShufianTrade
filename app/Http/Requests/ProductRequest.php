@@ -20,6 +20,12 @@ class ProductRequest extends FormRequest
     {
         $sku = $this->get('sku');
         $this->merge(['sku' => strtoupper($sku)]);
+        if (!$this->get('price')) {
+            $this->merge(['price' => 0]);
+        }
+        if (!$this->get('selling_price')) {
+            $this->merge(['selling_price' => 0]);
+        }
     }
 
     /**

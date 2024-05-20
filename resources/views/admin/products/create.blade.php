@@ -146,14 +146,14 @@
                                                 </div>
                                                 <div class="col-md-6">
                                                     <div class="form-group">
-                                                        <x-label for="price" /><span class="text-danger">*</span>
+                                                        <x-label for="price" />
                                                         <x-input name="price" />
                                                         <x-error field="price" />
                                                     </div>
                                                 </div>
                                                 <div class="col-md-6">
                                                     <div class="form-group">
-                                                        <x-label for="selling_price" /><span class="text-danger">*</span>
+                                                        <x-label for="selling_price" />
                                                         <x-input name="selling_price" />
                                                         <x-error field="selling_price" />
                                                     </div>

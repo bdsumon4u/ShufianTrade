@@ -97,6 +97,7 @@
                             </div>
                         </div>
 
+                        @if($product->price)
                         <div class="product__prices {{$product->selling_price == $product->price ? '' : 'has-special'}}">
                             Price:
                             @if($product->selling_price == $product->price)
@@ -106,6 +107,9 @@
                                 <span class="product-card__old-price">{!!  theMoney($product->price)  !!}</span>
                             @endif
                         </div>
+                        @else
+                        <h6>Contact for Price</h6>
+                        @endif
                         <ul class="product__meta">
                             <li class="product__meta-availability w-100 mb-2">
                                 <big>
@@ -122,6 +126,7 @@
                         <div class="product__sidebar">
                             <!-- .product__options -->
                             <form class="product__options">
+                                @if($product->price)
                                 <div class="form-group product__option">
                                     {{-- <label class="product__option-label" for="product-quantity">Quantity</label> --}}
                                     <div class="product__actions-item">
@@ -145,6 +150,7 @@
                                         </div>
                                     </div>
                                 </div>
+                                @endif
                                 <div class="call-for-order">
                                     {{-- <img src="{{ asset('call-now-icon-20.jpg') }}" width="135" alt="Call For Order">
                                     <div style="padding: 10px;margin-bottom: 10px;font-weight: bold;color: red;">

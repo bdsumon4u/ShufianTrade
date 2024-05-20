@@ -51,6 +51,7 @@
                                                 {{$product->name}}
                                             </a>
 										</li>
+										@if($product->price)
 										<li class="stitle">Price:
                                             @if($product->selling_price == $product->price)
                                                 {!!  theMoney($product->price)  !!}
@@ -60,6 +61,9 @@
                                                 <span class="product-card__old-price">{!! $product->price !!}</span>
                                             @endif
                                         </li>
+                                        @else
+                                        <li class="stitle">Contact for Price</li>
+                                        @endif
 										<li>Availability:
                                             @if(! $product->should_track)
                                                 <span class="text-success">In Stock</span>
