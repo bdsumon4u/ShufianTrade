@@ -41,7 +41,10 @@ class Category extends Model
 
     public static function nested($count = 0)
     {
-        $query = self::whereNull('parent_id')
+        $query = self::where(function ($query) {
+            $query->whereNull('parent_id')
+                ->orWhere('parent_id', 0);
+        })
             ->with(['childrens' => function ($category) {
                 $category->with('childrens');
             }])
