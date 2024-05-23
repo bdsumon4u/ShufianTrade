@@ -184,6 +184,7 @@
                         </div>
                     </div>
                 </div>
+                @if(false)
                 <div class="card">
                     <div class="card-header p-0">
                         <a class="card-link px-4" datatoggle="collapse" href="javascript:void(false)">
@@ -196,6 +197,7 @@
                         </div>
                     </div>
                 </div>
+                @endif
             </div>
         </div>
     </div>
