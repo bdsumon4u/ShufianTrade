@@ -5,8 +5,18 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="format-detection" content="telephone=no">
+    <meta name="google-site-verification" content="PFL51U5L5ABj-ieFlh5X4wlcZwfGARFzgBc_xJR0Syk" />
     <title>{{ setting('company')->name }} - @yield('title')</title>
     <link rel="icon" type="image/png" href="{{ asset($logo->favicon) }}"><!-- fonts -->
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-82FJMGEW8V"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+
+        gtag('config', 'G-82FJMGEW8V');
+    </script>
     <!-- css -->
     @include('facebook-pixel::head')
     @include('layouts.yellow.css')
