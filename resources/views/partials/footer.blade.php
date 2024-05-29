@@ -5,7 +5,9 @@
                 <div class="row justify-content-between">
                     <div class="col-12 col-md-6 col-lg-4">
                         <div class="site-footer__widget footer-contacts">
-                            <h5 class="footer-contacts__title">{{ $company->name ?? '' }}</h5>
+                            <h5 class="footer-contacts__title">
+                                <img src="/sti-brand.jpeg" width="100%" />
+                            </h5>
                             <div class="footer-contacts__text">{{ $company->tagline ?? '' }}</div>
                             <ul class="footer-contacts__contacts">
                                 <li><i class="footer-contacts__icon fas fa-globe-americas"></i> {{ $company->address ?? '' }}</li>
