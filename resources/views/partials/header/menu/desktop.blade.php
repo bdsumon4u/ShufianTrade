@@ -6,7 +6,7 @@
             </a>
         </li>
         <li class="nav-links__item nav-links__item--has-submenu">
-            <a class="nav-links__item-link" href="shop-grid-3-columns-sidebar.html">
+            <a class="nav-links__item-link" href="#">
                 <span>Categories
                     <svg style="fill: currentColor; transform: rotate(90deg); margin-left: 5px;" width="6px" height="9px">
                         <use
@@ -15,7 +15,7 @@
                     </svg>
                 </span>
             </a>
-            <div class="nav-links__submenu nav-links__submenu--type--menu" style="background: black; width: 255px;">
+            <div class="nav-links__submenu nav-links__submenu--type--menu" style="background: white; width: 255px;">
                 <ul class="departments__links">
                     @foreach($categories as $category)
                         <li class="departments__item @if($category->childrens->isNotEmpty()) departments__item--menu @endif">
