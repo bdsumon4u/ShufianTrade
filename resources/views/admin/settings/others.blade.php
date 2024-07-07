@@ -68,6 +68,13 @@
                 <x-error field="pixel_ids" />
             </div>
         </div>
+        <div class="col-md-6">
+            <div class="form-group">
+                <label for="">Meta Tags</label>
+                <x-textarea name="meta_tags" id="meta_tags">{!! $meta_tags ?? '' !!}</x-textarea>
+                <x-error field="meta_tags" />
+            </div>
+        </div>
     </div>
     <button type="submit" class="btn btn-success">Save</button>
 </div>
